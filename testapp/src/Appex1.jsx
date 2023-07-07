@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import ShowStuds from './componentsex1/ShowStuds'
-
+import Show from './componentsex1/Show'
+import Search from './componentsex1/Search'
 function Appex1() {
 
   const [studs, setStuds] = useState ([
@@ -16,10 +16,11 @@ function Appex1() {
   return (
     <>
       <section className=' h-screen flex flex-col items-center justify-center gap-6 '>
-        <input className='border border-black rounded-l' type="text" />
+       <Search studs={studs} setStuds={setStuds} />
+        
       <div className=' bg-slate-600 flex flex-col w-52 p-3 rounded-xl  items-center justify-center gap-5'>
         
-    <ShowStuds studs={studs} />
+      <Show studs={studs}/>
         
       </div>
       </section>
