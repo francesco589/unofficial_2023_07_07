@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unofficial Vanilla ex 2</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <main class="flex flex-col h-screen w-screen items-center gap-32">
+        <div class="flex flex-col gap-24 items-center mt-10">
+            <img class=" w-96" src="International_Pokémon_logo.svg.png" alt="pokemon">
+            <div class="flex gap-6">
+            <input class="border border-gray-700 w-96 text-2xl p-2 bg-slate-100" placeholder="Cerca Il tuo pokemon" type="text" id="searchbar">
+            <button id="btn" class="bg-red-300 p-4 rounded-xl hover:bg-red-500">Cerca</button>
+        </div>
+        </div>
+        <div class="bg-red-300 p-2 rounded-3xl" id="cont">
+        </div>
+    </main>
+    <script>
+        /*Ex 2
+        Usare la Pokemon API analizzata a lezione per realizzare un Pokedex come quello realizzato in React, ma in JS vanilla (barra di ricerca per nome e pulsante "cerca").
+        Per ogni Pokemon cercato, mostrare almeno 5 informazioni che lo riguardano, ricavate dall'API. Se un Pokemon non esiste, mostrare il messaggio "il pokemon non esiste".*/
+        
+        function $(elem){
+           return document.getElementById(elem)
+        }
+
+        const contain = $('cont')
+        const button = $('btn')
+        const inpu =$('searchbar')
+       
+
+        function search (param){    
+        fetch('https://pokeapi.co/api/v2/pokemon/' + param)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+                contain.innerHTML = `
+                <div class="flex flex-col gap-1 w-52 items-center">
+                <img class="w-36" src="${result.sprites.front_default}" alt="">
+                <span class="text-lg font-bold">Nome: ${result.name.toUpperCase()} </span>
+                <span class="">Peso: ${result.weight}</span>
+                <span>Altezza: ${result.height}</span>
+                <span>Esperienza base: ${result.base_experience}</span>
+                </div>
+                `
+                
+            })
+            .catch(err => {
+                contain.innerHTML = '<div class="text-blue-600 font-bold flex flex-col gap-3">pokemon non trovato</div>'
+                console.error(err)})
+            }
+            search('pikachu')
+       
+        button.addEventListener('click', e => {
+            search(inpu.value.toLowerCase())
+        })
+
+
+    </script>
+</body>
+</html>

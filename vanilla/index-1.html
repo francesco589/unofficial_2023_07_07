@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unoffial Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <main class="flex flex-col gap-8 justify-center items-center h-screen ">
+        <header class="text-4xl ">Students</header>
+        <section class=" text-black flex flex-col gap-4 p-3 rounded-xl border " id="contain"></section>
+        <div class="flex gap-2 "><button class="bg-green-300 p-3 rounded-xl" id="best">Best Sort</button><button class="bg-red-300 p-3 rounded-xl" id="worse">Worse Sort</button></div>
+    </main>
+    <script>
+
+                /*Ex 1
+        Dato il seguente JSON (da correggere semanticamente per essere valido): [
+        {id: 1, fullname: "mario rossi", avg: 6}, {id: 2, fullname: "luigi verdi", avg: 4}, {id: 3, fullname: "peach pink", avg: 8}, {id: 4, fullname: "wario rossi", avg: 9},
+        ]
+        sotto forma di stringa, analizzarlo per creare una struttura nel DOM in cui vengono mostrati gli studenti, inizialmente nell'ordine fornito, con un CSS personale.
+        Creare 2 pulsanti: "ordina per migliore" e "ordina per peggiore". Al click, mostrare la lista di studenti nell'ordine apposito, sostituendo la precedente.*/
+        //parsing json
+        const json = `[
+            {"id": 1, "fullname": "mario rossi", "avg": 6},
+            {"id": 2, "fullname": "luigi verdi", "avg": 4},
+            {"id": 3, "fullname": "peach pink", "avg": 8},
+            {"id": 4, "fullname": "wario rossi", "avg": 9}
+            ]`
+        
+        let jsonParsed = JSON.parse(json)
+        //getting elements by id
+        function $(elem){
+           return document.getElementById(elem)
+        }
+    
+        const divCont = $('contain')
+        const worseBtn  = $('worse')
+        const bestBtn = $('best')
+        let cont = ''
+
+        //function sorting best
+        function bestSort(arr){
+            divCont.innerHTML = ''
+            arr.sort((a, b) => b.avg - a.avg )
+            cont = ''
+            jsonParsed.forEach((el, i) => {
+            cont = document.createElement('div')
+            cont.innerHTML = `
+                                <span>Id: ${el.id}</span>
+                                <span>Fullname: ${el.fullname}</span>
+                                <span>Average: ${el.avg}</span>`
+                            
+            cont.classList.add('flex', 'flex-col', `bg-${i %2 == 1 ? 'blue' : 'slate' }-400`, 'p-4','rounded-xl')        
+            divCont.appendChild(cont)  
+        })    
+        }
+        //function sorting worse
+        function worseSort(arr){
+            divCont.innerHTML = ''
+            arr.sort((a, b) => a.avg - b.avg )
+            cont = ''
+            jsonParsed.forEach((el, i) => {
+            cont = document.createElement('div')
+            cont.innerHTML = `
+                                <span>Id: ${el.id}</span>
+                                <span>Fullname: ${el.fullname}</span>
+                                <span>Average: ${el.avg}</span>`
+                                                        //alternate colors
+            cont.classList.add('flex', 'flex-col', `bg-${i %2 == 1 ? 'blue' : 'slate' }-400`, 'p-4','rounded-xl')        
+            divCont.appendChild(cont)  
+        })};
+
+        //mounting screen
+       jsonParsed.forEach((el, i) => {
+        cont = document.createElement('div')
+        cont.innerHTML = `
+                            <span>Id: ${el.id}</span>
+                            <span>Fullname: ${el.fullname}</span>
+                            <span>Average: ${el.avg}</span>`
+                        
+        cont.classList.add('flex', 'flex-col', `bg-${i %2 == 1 ? 'blue' : 'slate' }-400`, 'p-4','rounded-xl')        
+        divCont.appendChild(cont)  
+       });
+       //buttons
+       worseBtn.addEventListener('click',() => worseSort(jsonParsed))
+       bestBtn.addEventListener('click',() => bestSort(jsonParsed))
+
+
+        
+            
+    
+
+   
+
+    </script>
+</body>
+</html>
